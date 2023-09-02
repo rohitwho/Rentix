@@ -1,20 +1,20 @@
 //IMPORT EXPRESS AND MODELS
 const router = require('express').Router();
 
-const { Accomodation,Transportation,Trending, Catering } = require('../../models');
+const { Transportation} = require('../../models');
 
 // THE CATERING ENDPOINTS
 router.get('/',async (req, res) => {
     
     try{
-      const transportationdata= await Transportation.findAll()
+      const transportationdata=   await Transportation.findAll()
     // serialize Data
     const transport =transportationdata.map((transportation)=>transportation.get({plain:true}));
   
     res.render('transportation',{
      transport,
-      // username: req.session.username,
-      //   logged_in: req.session.logged_in
+      username: req.session.username,
+        logged_in: req.session.logged_in
     })
   }catch(err) {
       console.log(err);
@@ -34,8 +34,8 @@ router.get('/',async (req, res) => {
       res.render('transportation',{
         transportserial,
     
-        // username: req.session.username,
-        // logged_in: req.session.logged_in
+        username: req.session.username,
+        logged_in: req.session.logged_in
       })
     }catch(err) {
         console.log(err);
@@ -56,6 +56,7 @@ router.get('/',async (req, res) => {
       
           res.status(200).json(newvehicle);
         } catch (err) {
+          console.log(err);
           res.status(400).json(err);
         }
       });

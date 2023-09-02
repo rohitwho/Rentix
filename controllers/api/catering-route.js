@@ -1,31 +1,19 @@
 //IMPORT EXPRESS AND MODELS
 const router = require('express').Router();
-const { Accomodation,Transportation,Trending, Catering } = require('../../models');
+const {  Catering } = require('../../models');
 
 // THE CATERING ENDPOINTS
 router.get('/',async (req, res) => {
     
     try{
-      const Cateringdata= await Catering.findAll({
-      include: [ 
-        // {
-        //   model: Catering
-        // },
-        // {
-        //   model: Transportation
-        // },
-        // {
-        //   model: Accomodation
-        // },
-      ]
-    })
+      const cateringData= await Catering.findAll()
     // serialize Data
-    const catering =Cateringdata.map((catering)=>catering.get({plain:true}));
+    const catering = cateringData.map((catering) => catering.get({plain:true}));
   
     res.render('catering',{
      catering,
-      // username: req.session.username,
-      //   logged_in: req.session.logged_in
+      username: req.session.username,
+        logged_in: req.session.logged_in
     })
   }catch(err) {
       console.log(err);
@@ -44,8 +32,8 @@ router.get('/',async (req, res) => {
       res.render('catering',{
         cateringserial ,
     
-        // username: req.session.username,
-        // logged_in: req.session.logged_in
+        username: req.session.username,
+        logged_in: req.session.logged_in
       })
     }catch(err) {
         console.log(err);

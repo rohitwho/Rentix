@@ -1,52 +1,54 @@
-async function getCarInfo(e){
-    e.preventDefault()
-    const carName = document.getElementById("tName").value.trim()
-    const description = document.getElementById("tDescriptionId").value.trim()
-    const carCapacity = document.getElementById("tCapacityId").value.trim()
-    const price = document.getElementById("tPriceId").value.trim()
-    const filename = document.getElementById("tFilenameId").value.trim()
+async function getCarInfo(event) {
+  event.preventDefault();
+
+  let carName = document.getElementById("tName").value.trim();
+  let description = document.getElementById("tDescriptionId").value.trim();
+  let carCapacity = document.getElementById("tCapacityId").value.trim();
+  let price = document.getElementById("tPriceId").value.trim();
+  let filename = document.getElementById("tFilenameId").value.trim();
+
+  function clearInputs() {
 
 
-let data = {
-    transportation_name:carName ,
+    carName.value = "";
+    description.value = "";
+    carCapacity.value = "";
+    price.value = "";
+    filename.value = "";
+  }
+
+  let data = {
+    transportation_name: carName,
     transportation_description: description,
-    capacity:carCapacity ,
-    price:price,
-    filename:filename 
-}
+    capacity: carCapacity,
+    price: price,
+    filename: filename,
+  };
+  try {
+  
 
-
-    if (carName && description && carCapacity && price && filename ) {
-        const response = await fetch('/api/transport', {
-          method: 'POST',
-          body: JSON.stringify(data),
-          headers: { 'Content-Type': 'application/json' },
-
-          
-        });
-        // response.forEach(element => {
-        //     console.log(element)
-        // });
-        
+    if (carName && description && carCapacity && price && filename) {
+      const response = await fetch("/api/transport", {
+        method: "POST",
+        body: JSON.stringify(data),
+        headers: { "Content-Type": "application/json" },
+      })
+        console.log( "here is the response " + response);
         if (response.ok) {
-            console.log("data seeded")
-        //   document.location.replace('/');
-        } else (err)=>{
-            console.log(err)
-        //   alert(response.statusText);
-        }
-      }
+          clearInputs();
 
- 
+          console.log("data seeded");
+        } else
+          (err) => {
+            console.log(err);
+          };
+   
+    }
+  } catch (err) {
+    console.log(err);
+  }
 
-    
-    
-    // console.log(place)
-    // console.log(description)
-    // console.log(location)
-    // console.log(price)
-    // console.log(filename)
-
+  console.log(data)
 
 }
-document.querySelector(".uploadInfo").addEventListener("click",getCarInfo)
+document.querySelector(".uploadInfo").addEventListener("click", getCarInfo);
