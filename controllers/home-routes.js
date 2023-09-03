@@ -1,67 +1,51 @@
 //IMPORT EXPRESS AND MODELS
-const router = require('express').Router();
-const withAuth = require('../utils/auth');
-const sequelize = require("../config/connection")
-const { Accomodation, Transportation, Trending, Catering } = require('../models');
+const router = require("express").Router();
+const withAuth = require("../utils/auth");
+const sequelize = require("../config/connection");
+const {
+  Accomodation,
+  Transportation,
+  Trending,
+  Catering,
+} = require("../models");
 
-router.get("/",(req,res)=>{
-  res.render("homepage",{
+router.get("/", (req, res) => {
+  res.render("homepage", {
     loggedIn: req.session.loggedIn,
-   
-  })
-})
-
-router.get("/uploadTran",(req,res)=>{
-  res.render("uploadTran")
-})
-
-router.get("/uploadAcc",(req,res)=>{
-  res.render("uploadAcc")
-})
-
-router.get('/product', async (req, res) => {
-  res.render('product');
+  });
 });
 
-router.get("/Contact",   (req, res) => {
-  res.render("Contact")
-})
+router.get("/uploadTran", (req, res) => {
+  res.render("uploadTran");
+});
+
+router.get("/uploadAcc", (req, res) => {
+  res.render("uploadAcc");
+});
+
+router.get("/product", async (req, res) => {
+  res.render("product");
+});
+
+router.get("/Contact", (req, res) => {
+  res.render("Contact");
+});
 
 //login page
-router.get('/Login', (req, res) => {
-  if (req.session.loggedIn) {
-    res.redirect('/');
-    return;
+router.get("/Login", (req, res) => {
+  try {
+    if (req.session.loggedIn) {
+      res.redirect("/");
+      return;
+    }
+
+    res.render("Login");
+  } catch (err) {
+    console.log(err);
   }
-
-
-
-  res.render('login');
 });
 
-
-
 module.exports = router;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // //CREATE
 // router.post('/', (req, res) => {
@@ -122,4 +106,3 @@ module.exports = router;
 // });
 
 //EXPORT
-
